@@ -1,0 +1,171 @@
+[colors]
+background = #FFFFFF
+foreground = #000000
+alert = #FB4939
+blue = #458588
+green = #98C379
+purple = #B16286
+orange = #D65D0e
+yellow = #D79921
+black = #1D2021
+aqua = #689D6A
+
+[bar/bspwm-bar]
+width = 100%
+height = 22
+radius = 6.0
+fixed-center = true
+background = ${colors.background}
+foreground = ${colors.foreground}
+border-size = 4
+border-color = #00000000
+padding-left = 1
+padding-right = 1
+module-margin-left = 1
+module-margin-right = 1
+
+tray-position = right
+tray-padding = 2
+
+font-0 = JetBrainsMono NF:size=10:anitalias=false;2
+font-1 = Symbols Nerd Font:style=Regular:size=13;2
+
+modules-left = search terminal filemanager browser wallre
+modules-center = bspwm 
+modules-right = pacman xbacklight pulseaudio battery internet date time
+
+;fixed-center = true
+wm-restack = bspwm
+override-redirect = true
+cursor-click = pointer
+cursor-scroll = ns-resize
+
+[module/bspwm]
+type = internal/bspwm
+;; label-focused = 
+;; label-occupied = 
+;; label-urgent = 
+
+label-focused = 󰮯
+label-occupied = 
+label-urgent = 
+label-focused-foreground = ${colors.blue}
+label-focused-padding = 1
+label-occupied-foreground = ${colors.foreground}
+label-occupied-padding = 1
+label-urgent-foregroud = ${colors.alert}
+label-urgent-padding = 1
+label-empty = %icon%
+label-empty-foreground = ${colors.foreground}
+label-empty-padding = 1
+
+ws-icon-0 = I;
+ws-icon-1 = II;
+ws-icon-2 = III;
+ws-icon-3 = IV;
+ws-icon-4 = V;
+
+[module/xbacklight]
+type = internal/xbacklight
+;card = intel_backlight
+format = <label> 
+label = %{F#689d6a}󰃝 %{F-}%percentage%%
+
+[module/date]
+type = internal/date
+interval = 60
+date = " %Y-%m-%d"
+label = %{F#98C379} %{F-}%date%  
+
+[module/time]
+type = internal/date
+interval = 60
+time = %H:%M
+label = %{F#56B6C2}󰅒 %{F-}%time% 
+
+[module/pulseaudio]
+type = internal/pulseaudio
+format-volume = <label-volume> 
+label-volume = %{F#C678DD}󱄠 %{F-} %percentage%%
+label-muted = 󰸈 
+label-muted-foreground = ${colors.alert}
+
+[module/search]
+type = custom/text
+content =   
+content-foreground = ${colors.orange} 
+click-left = rofi -modi drun -show drun -show-icons
+
+[module/wallre]
+type = custom/text
+content =   
+content-foreground = ${colors.green} 
+click-left = xwallpaper --zoom $(find ~/Pictures/Wallpapers/ -type f | shuf -n 1) && notify-send "Wallpaper Changed!"
+
+[module/pacman]
+type = custom/script
+exec = dbpacup 
+interval = 300
+format = %{F#56B6C2}%{F-}<label>
+click-left = notify-send "Updates:" "$(checkupdates)"
+click-right = alacritty --class 'updater' -e sudo pacman -Syu
+
+[module/internet]
+type = custom/script
+exec = dbinet 
+interval = 30
+format = %{F#56B6C2}%{F-}<label>
+click-left = notify-send "Internet Status" "Connected to $(dbinet)"
+click-right = alacritty --class 'updater' -e nmtui
+
+[module/battery]
+type = internal/battery
+battery = BAT0
+full-at = 99
+low-at = 40
+label-full = %{F#56B6C2}󱟢%{F-} %percentage%%
+label-low = %{F#fb4934}󰂎%{F-} %percentage%%
+label-charging = %{F#689d6a}󰂄%{F-} %percentage%%
+label-discharging = %{F#56B6C2}󰂃%{F-} %percentage%%
+format-charging = <label-charging> 
+format-discharging = <label-discharging>
+
+[module/filemanager]
+type = custom/text
+content =  
+content-foreground = ${colors.green}
+click-left = pcmanfm
+
+[module/browser]
+type = custom/text
+content =  
+content-foreground = ${colors.green}
+click-left = firefox
+
+[module/terminal]
+type = custom/text
+content =  
+content-foreground = ${colors.green}
+click-left = alacritty 
+click-right = alacritty -e $EDITOR $HOME/.config/alacritty/alacritty.yml
+
+[module/network]
+type = internal/network
+interface = wlp2s0
+interval= 5.0
+format-connected = %{F#C678DD}直%{F-}
+format-disconnected =%{F#C678DD}睊%{F-}
+
+[settings]
+screenchange-reload = true
+;compositing-background = xor
+;compositing-background = screen
+;compositing-foreground = source
+;compositing-border = over
+;pseudo-transparency = false
+
+[global/wm]
+margin-top = 5
+margin-bottom = 5
+
+; vim:ft=dosini
