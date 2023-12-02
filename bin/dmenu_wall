@@ -1,0 +1,28 @@
+#!/bin/sh
+
+# Wallpaper directory 
+dir=~/Pictures/wallpapers/gruv
+
+# Get list of images
+images=($dir/*.{jpg,png})
+
+# Notify if no wallpapers found
+if [ ${#images[@]} -eq 0 ]; then
+    notify-send "No wallpapers found"
+    exit 1
+fi
+
+# Show dmenu prompt 
+chosen="$(find $dir -maxdepth 1 -type f -print0 | dmenu -l 5 -p 'Choose Wallpaper' )"
+
+# Notify if nothing selected
+if [ -z "$chosen" ]; then
+  notify-send "No wallpaper selected"
+  exit 1  
+fi
+
+# Set selected wallpaper
+xwallpaper --zoom "$chosen"
+
+# Notify wallpaper changed
+notify-send "Wallpaper changed to: $(basename $chosen)"

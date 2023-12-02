@@ -1,0 +1,34 @@
+#!/bin/sh
+
+#!/bin/bash
+
+# Define the clipboard directory and file
+CLIP_DIR="$HOME/.cache/clipmenu"
+CLIP_FILE="$CLIP_DIR/clipboard"
+
+# Create the clipboard directory and file if they don't exist
+mkdir -p "$CLIP_DIR"
+touch "$CLIP_FILE"
+
+# Get the current clipboard content
+CLIP_CONTENT=$(xsel -b)
+
+# Append the clipboard content to the file if it's not empty or duplicate
+if [[ -n "$CLIP_CONTENT" && "$CLIP_CONTENT" != "$(tail -n 1 "$CLIP_FILE")" ]]; then
+  echo "$CLIP_CONTENT" >> "$CLIP_FILE"
+fi
+
+# Get the user's choice using rofi
+
+choice=$(tac "$CLIP_FILE" | rofi -dmenu -p "Clipboard:")
+
+# Perform the action based on the choice
+if [[ -n "$choice" ]]; then
+  # Copy the choice to the clipboard
+  echo "$choice" | xsel -b
+  # Delete the choice from the file if Shift is pressed
+  if [[ "$MODIFIER" == "Shift" ]]; then
+    sed -i "\|$choice|d" "$CLIP_FILE"
+  fi
+fi
+

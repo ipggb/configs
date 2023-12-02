@@ -1,0 +1,27 @@
+#!/bin/sh
+
+# Create the screenshot folder in ~/Pictures if it does not exist
+mkdir -p ~/Pictures/screenshot
+# Use the screenshot folder as the destination
+dest=~/Pictures/screenshot
+
+# Check the command line argument
+if [ "$1" == "-n" ]; then
+  # Take a normal screenshot and save the file name and path in variables
+  file_name=$(scrot -z -f $dest/%Y-%m-%d-%H_%M.png -e 'echo $f')
+  file_path=$(scrot -z -f $dest/%Y-%m-%d-%H_%M.png -e 'echo $n')
+  # Show a notification with normal urgency and custom message
+  dunstify -a "Screenshot Captured" -t 3000 -h string:screenshot:$file_name -u normal "Saved as $file_name at $file_path"
+elif [ "$1" == "-i" ]; then
+  # Take an interactive screenshot and save the file name and path in variables
+  file_name=$(scrot -z -s -f $dest/%Y-%m-%d-%H_%M.png -e 'echo $f')
+  file_path=$(scrot -z -s -f $dest/%Y-%m-%d-%H_%M.png -e 'echo $n')
+  # Show a notification with critical urgency and custom message
+  dunstify -a "Screenshot Captured" -t 3000 -h string:screenshot:$file_name -u normal "Saved as $file_name at $file_path"
+else
+  # Print the usage message
+  echo "Usage: $0 [-n|-i]"
+  echo "-n: take a normal screenshot"
+  echo "-i: take an interactive screenshot"
+fi
+

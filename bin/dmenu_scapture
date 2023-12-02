@@ -1,0 +1,25 @@
+#!/bin/sh
+
+# Define the screenshot options
+options="Full\nArea"
+
+# Define the screenshot directory
+SCREENSHOT_DIR="$HOME/Pictures/screenshot"
+
+# Create the screenshot directory if it doesn't exist
+mkdir -p "$SCREENSHOT_DIR"
+
+# Get the user's choice using dmenu
+choice=$(echo -e "$options" | rofi -dmenu -p "Screenshot:")
+
+# Define the filename for the screenshot
+filename="$SCREENSHOT_DIR/%Y-%m-%d-%H%M%S.png"
+
+# Perform the action based on the choice
+case "$choice" in
+  Full) scrot "$filename" ;;
+  Area) scrot -s "$filename" ;;
+esac
+
+# Send a notification with the filename
+notify-send -i camera "Screenshot captured" "saved as $filename"

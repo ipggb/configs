@@ -1,0 +1,14 @@
+#!/bin/sh
+
+# Define the power options
+options="Shutdown\nReboot\nLogout"
+
+# Get the user's choice using dmenu
+choice=$(echo -e "$options" | dmenu -p "Power:")
+
+# Perform the action based on the choice
+case "$choice" in
+  Shutdown) systemctl poweroff ;;
+  Reboot) systemctl reboot ;;
+  Logout) pkill -KILL -u "$USER" ;;
+esac
