@@ -1,0 +1,5 @@
+# xcompmgr &
+# dunst & 
+# xwallpaper --zoom $(find ~/Pictures/wallpapers/gruv -type f | shuf -n 1) &
+# dwmblocks &
+exec bspwm
