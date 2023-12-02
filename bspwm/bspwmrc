@@ -1,0 +1,36 @@
+#! /bin/sh
+
+# startup applications:
+pgrep -x sxhkd > /dev/null || sxhkd &
+pkill polybar &
+$HOME/.config/polybar/launch.sh &
+xcompmgr &
+dunst & 
+xwallpaper --zoom $(find ~/Pictures/Wallpapers/ -type f | shuf -n 1) &
+xsetroot -cursor_name left_ptr &
+xbacklight -set 50% &
+
+bspc monitor -d I II III IV V
+
+bspc config border_width         3
+bspc config window_gap          12
+bspc config top_padding		24
+
+bspc config normal_border_color "#ffffff"
+bspc config focused_border_color "#98c379"
+bspc config focus_follows_pointer true
+
+bspc config split_ratio          0.52
+bspc config borderless_monocle   true
+bspc config gapless_monocle      true
+
+bspc rule -a Chromium desktop='^3'
+bspc rule -a Brave-browser desktop='^3' follow=off
+bspc rule -a firefox desktop='^3' follow=off
+bspc rule -a discord desktop='^4' follow=off
+bspc rule -a VSCodium desktop='^4' follow=off
+bspc rule -a code-oss desktop='^4' follow=off
+bspc rule -a mplayer2 state=floating
+bspc rule -a Kupfer.py focus=on
+bspc rule -a Screenkey manage=off
+bspc rule -a updater state=floating follow=on
