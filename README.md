@@ -9,6 +9,15 @@ zsh zsh-syntax-highlighting xorg-server xorg-xinit xorg-xbacklight xorg-xsetroot
 
 > Use sudo to install packages; `sudo pacman -S *<package name>*`
 
+#### AUR Packages 🙂 ️️
+Beside the packages in Official Arch Repository, there are also some packages from [Arch User Repository (AUR)](https://aur.archlinux.org).
+
+```sh
+paru -S onlyoffice-bin ttf-ms-fonts microsoft-edge-stable-bin
+```
+
+> You need to have `paru` installed to use AUR, or you can use any other [AUR Helper](https://wiki.archlinux.org/title/AUR_helpers).
+
 ## Additional Setups 🏭 
 There are several additional setups necessary for the system to look good and be more functional.
 
@@ -20,7 +29,7 @@ Variant: `Light-compact`
 
 ---
 ##### Icon Theme 🔵
-I use `Adwaita` which is default GTK theme, so there's no need to install.
+I use `papirus-icon-theme` which is installed while running *setup.sh*.
 
 ---
 ##### Pacman optimizations 📦 
@@ -37,3 +46,7 @@ This will show `******` instead of blank `       ` when we enter the password in
 
 1. Open sudoers file `EDITOR=nvim visudo`
 1. Then add `Defaults pwfeedback`
+
+##### Git configuration
+git config --global user.email *(your useremail)*
+git config --global user.name *(your username)*
